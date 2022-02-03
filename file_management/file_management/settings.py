@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'file_management.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'erp',
+        'NAME': 'file_management',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
