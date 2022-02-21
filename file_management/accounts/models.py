@@ -1,15 +1,17 @@
 from unicodedata import name
 from django.db import models
+from django.contrib.auth.models import User
 from pandas import describe_option
 
 # Create your models here.
 
 
 class Customer(models.Model):
-
+    user = models.OneToOneField(User, blank=True, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, null=True)
     phone = models.CharField(max_length=255, null=True)
     email = models.CharField(max_length=255, null=True)
+    profile_pic = models.ImageField(default="profile.png",null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     # To view the name on the dashboard do:::
