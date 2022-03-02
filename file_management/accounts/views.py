@@ -91,7 +91,7 @@ def userPage(request):
 
     print('ORDERS:', orders)
 
-    context = {'orders': orders, 'customers': customers,
+    context = {'orders': orders, 'customers': customer,
                'total_orders': total_orders, 'delivered': delivered, 'pending': pending}
     return render(request, 'accounts/user.html', context)
 
@@ -120,7 +120,7 @@ def products(request):
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
-def customers(request, pk):
+def customer(request, pk):
     customer = Customer.objects.get(id=pk)
 
     orders = customer.order_set.all()
@@ -213,3 +213,18 @@ def deleteCustomer(request, pk):
         return redirect('/')
 
     return render(request, 'accounts/delete_customer.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def orderCreate(request):
+
+    form = OrderForm
+    if request.method == 'POST':
+        # print('Printing POST:', request.POST)
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    context = {'form': form}
+    return render(request, 'accounts/create_order.html', context)
